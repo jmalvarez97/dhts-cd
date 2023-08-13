@@ -17,7 +17,7 @@ app.get("/", async (req, res) => {
   res.send(`Hello, World! The time from the DB is ${rows[0].now}`);
 });
 
-app.post("/", async (req, res) => {
+app.post("/api", async (req, res) => {
   const dataFromBody = req.body;
 
   const query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
