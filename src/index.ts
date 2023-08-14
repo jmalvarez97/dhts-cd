@@ -4,6 +4,22 @@ import pg from "pg";
 const cors = require('cors')
 const pool = new pg.Pool();
 
+function convertTimestampToFormattedDate() {
+  const offsetGMT = -3; // GMT -3
+  const date = new Date()
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-based, so adding 1
+  const year = date.getFullYear() % 100; // Get last two digits of the year
+
+  const hours = date.getHours() - 3;
+  const minutes = date.getMinutes();
+  const seconds = (date.getSeconds() > 10) ? date.getSeconds() : "0" + date.getSeconds().toString()
+
+  const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  return formattedDate;
+}
+
 const app = express();
 const port = process.env.PORT || 3333;
 
@@ -20,8 +36,9 @@ app.get("/", async (req, res) => {
 app.post("/api", async (req, res) => {
   const dataFromBody = req.body;
 
+  console.log(dataFromBody)
   const query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
-  const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, Date.now()];
+  const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, convertTimestampToFormattedDate()];
 
   try {
     const result = await pool.query(query, values);
