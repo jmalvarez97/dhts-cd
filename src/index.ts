@@ -12,11 +12,12 @@ function convertTimestampToFormattedDate() {
   const month = date.getMonth() + 1; // Months are zero-based, so adding 1
   const year = date.getFullYear() % 100; // Get last two digits of the year
 
-  const hours   = ((date.getHours() - 3) >= 10) ? date.getHours() : "0" + date.getHours().toString();
+  const hours = date.getHours() - 3
+  const parsedHours   = (hours >= 10) ? hours : "0" + hours.toString();
   const minutes = (date.getMinutes() >= 10)     ? date.getMinutes() : "0" + date.getMinutes().toString()
   const seconds = (date.getSeconds() >= 10)     ? date.getSeconds() : "0" + date.getSeconds().toString()
 
-  const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  const formattedDate = `${day}/${month}/${year} ${parsedHours}:${minutes}:${seconds}`;
   return formattedDate;
 }
 
