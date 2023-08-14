@@ -21,7 +21,7 @@ app.post("/api", async (req, res) => {
   const dataFromBody = req.body;
 
   const query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
-  const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, Date.now()];
+  const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, dataFromBody.fecha];
 
   try {
     const result = await pool.query(query, values);
