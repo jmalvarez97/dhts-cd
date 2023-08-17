@@ -74,6 +74,19 @@ app.get("/api/measurement", (req, res) => {
   });
 })
 
+app.get("/api/last96Measurements", (req, res) => {
+  const query = 'SELECT * FROM mediciones ORDER BY id DESC LIMIT 96';
+  pool.query(query)
+  .then(result => {
+      res.send(result.rows);
+  })
+  .catch(err => {
+    console.error('Error al ejecutar la consulta:', err);
+    res.status(500).send('Error al agregar la fila en la base de datos');
+  });
+})
+  
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
