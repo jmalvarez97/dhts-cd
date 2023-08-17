@@ -16,7 +16,7 @@ function convertTimestampToFormattedDate() {
   const minutes = (date.getMinutes() >= 10)     ? date.getMinutes() : "0" + date.getMinutes().toString()
   const seconds = (date.getSeconds() >= 10)     ? date.getSeconds() : "0" + date.getSeconds().toString()
 
-  const formattedDate = `${day}/${month}/${year} ${parsedHours}:${minutes}:${seconds}`;
+  const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   return formattedDate;
 }
 
