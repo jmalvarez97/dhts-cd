@@ -69,6 +69,18 @@ app.get("/api/lastMeasurement", (req, res) => {
     });
 })
 
+app.get("/api/lastMeasurement2", (req, res) => {
+  const query = 'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 1';
+  pool.query(query)
+  .then(result => {
+      res.send(result.rows[0]);
+    })
+    .catch(err => {
+      console.error('Error al ejecutar la consulta:', err);
+      res.status(500).send('Error al agregar la fila en la base de datos');
+    });
+})
+
 app.get("/api/measurement", (req, res) => {
   const query = 'SELECT * FROM mediciones';
   pool.query(query)
@@ -83,6 +95,18 @@ app.get("/api/measurement", (req, res) => {
 
 app.get("/api/last96Measurements", (req, res) => {
   const query = 'SELECT * FROM mediciones ORDER BY id DESC LIMIT 96';
+  pool.query(query)
+  .then(result => {
+      res.send(result.rows);
+  })
+  .catch(err => {
+    console.error('Error al ejecutar la consulta:', err);
+    res.status(500).send('Error al agregar la fila en la base de datos');
+  });
+})
+
+app.get("/api/last96Measurements2", (req, res) => {
+  const query = 'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 96';
   pool.query(query)
   .then(result => {
       res.send(result.rows);
