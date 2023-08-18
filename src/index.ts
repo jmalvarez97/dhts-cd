@@ -37,16 +37,16 @@ app.post("/api", async (req, res) => {
   const dataFromBody = req.body;
 
   console.log(dataFromBody)
-  let query;
+  let query, values;
   if(dataFromBody.s1h){
     query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
+    values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, convertTimestampToFormattedDate()];
   }
   else{
     query = 'INSERT INTO mediciones2 (s3h, s3t, s4h, s4t, date) VALUES ($1, $2, $3, $4, $5)';
+    values = [dataFromBody.s3h, dataFromBody.s3t, dataFromBody.s4h, dataFromBody.s4t, convertTimestampToFormattedDate()];
   } 
     
-  const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, convertTimestampToFormattedDate()];
-
   try {
     const result = await pool.query(query, values);
     console.log('Fila agregada correctamente');
