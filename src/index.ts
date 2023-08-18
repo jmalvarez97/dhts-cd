@@ -37,7 +37,14 @@ app.post("/api", async (req, res) => {
   const dataFromBody = req.body;
 
   console.log(dataFromBody)
-  const query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
+  let query;
+  if(dataFromBody.s1h){
+    query = 'INSERT INTO mediciones (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
+  }
+  else{
+    query = 'INSERT INTO mediciones2 (s1h, s1t, s2h, s2t, date) VALUES ($1, $2, $3, $4, $5)';
+  } 
+    
   const values = [dataFromBody.s1h, dataFromBody.s1t, dataFromBody.s2h, dataFromBody.s2t, convertTimestampToFormattedDate()];
 
   try {
