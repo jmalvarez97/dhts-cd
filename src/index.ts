@@ -57,30 +57,6 @@ app.post("/api", async (req, res) => {
   }
 } )
 
-app.get("/api/lastMeasurement", (req, res) => {
-  const query = 'SELECT * FROM mediciones ORDER BY id DESC LIMIT 1';
-  pool.query(query)
-  .then(result => {
-      res.send(result.rows[0]);
-    })
-    .catch(err => {
-      console.error('Error al ejecutar la consulta:', err);
-      res.status(500).send('Error al agregar la fila en la base de datos');
-    });
-})
-
-app.get("/api/lastMeasurement2", (req, res) => {
-  const query = 'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 1';
-  pool.query(query)
-  .then(result => {
-      res.send(result.rows[0]);
-    })
-    .catch(err => {
-      console.error('Error al ejecutar la consulta:', err);
-      res.status(500).send('Error al agregar la fila en la base de datos');
-    });
-})
-
 app.get("/api/measurement", (req, res) => {
   const query = 'SELECT * FROM mediciones';
   pool.query(query)
@@ -93,6 +69,21 @@ app.get("/api/measurement", (req, res) => {
   });
 })
 
+
+
+// SE SIGUE USANDO, PROXIMA A BORRAR
+app.get("/api/lastMeasurement", (req, res) => {
+  const query = 'SELECT * FROM mediciones ORDER BY id DESC LIMIT 1';
+  pool.query(query)
+  .then(result => {
+      res.send(result.rows[0]);
+    })
+    .catch(err => {
+      console.error('Error al ejecutar la consulta:', err);
+      res.status(500).send('Error al agregar la fila en la base de datos');
+    });
+})
+// SE SIGUE USANDO, PROXIMA A BORRAR
 app.get("/api/last96Measurements", (req, res) => {
   const query = 'SELECT * FROM mediciones ORDER BY id DESC LIMIT 96';
   pool.query(query)
@@ -105,8 +96,28 @@ app.get("/api/last96Measurements", (req, res) => {
   });
 })
 
-app.get("/api/last96Measurements2", (req, res) => {
-  const query = 'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 96';
+
+app.get("/api/lastMeasurement/:id", (req, res) => {
+  const query = (req.params.id === "1") ? 
+                'SELECT * FROM mediciones ORDER BY id DESC LIMIT 1' : 
+                'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 1'
+  pool.query(query)
+  .then(result => {
+      res.send(result.rows[0]);
+    })
+    .catch(err => {
+      console.error('Error al ejecutar la consulta:', err);
+      res.status(500).send('Error al agregar la fila en la base de datos');
+    });
+})
+
+
+
+
+app.get("/api/last96Measurements/:id", (req, res) => {
+  const query = (req.params.id === "1") ? 
+                'SELECT * FROM mediciones ORDER BY id DESC LIMIT 96':
+                'SELECT * FROM mediciones2 ORDER BY id DESC LIMIT 96'
   pool.query(query)
   .then(result => {
       res.send(result.rows);
