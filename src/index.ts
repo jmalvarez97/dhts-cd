@@ -8,7 +8,7 @@ function convertTimestampToFormattedDate() {
   const offsetGMT = -3; // GMT -3
   const date = new Date()
 
-  const day = date.getDate();
+  const day = (date.getHours() >= 21) ? date.getDate() - 1 : date.getDate();
   const month = date.getMonth() + 1; // Months are zero-based, so adding 1
   const year = date.getFullYear() % 100; // Get last two digits of the year
 
